@@ -11,6 +11,11 @@ void setup(){
 //draw: an infinite loop
 void draw()
 {
+  for(int i = 0;i<5;i++)
+  {
+    rect(1*i, 0, 20, 5);
+    fill(fillColor);
+  }
   //Mouse Pressed means a radial drawing to the center of the canvas
   if(mousePressed){
   strokeWeight(10);
@@ -19,11 +24,7 @@ void draw()
     
   }
   //changing colors
-  for(int i = 0;i<5;i++)
-  {
-    rect(1*i, 0, 20, 5);
-    fill(fillColor);
-  }
+  
   //Black
   if(counter == 0) {
     fillColor = #000000;
@@ -56,6 +57,9 @@ void keyPressed()
   if(key == 'p')
   {
     save("image.png");
+  }
+  if(key == 'e' || key == 'E') {
+    fillColor = #FFFFFF;
   }
   //Cycle Through the Colors
   //  Up
