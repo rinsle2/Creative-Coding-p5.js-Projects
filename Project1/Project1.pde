@@ -59,7 +59,7 @@ void keyPressed()
   }
   //Cycle Through the Colors
   //  Up
-  if(key == '+')
+  if(key == '+' || key == '=')
   {
     counter++;
     if(counter >= 6) {
