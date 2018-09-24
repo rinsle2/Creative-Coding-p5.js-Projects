@@ -38,7 +38,12 @@ function storyStart() {
 }
 
 function exploreRoom() {
-    
+    user.hide();
+    title.html("The Room");
+    text.html("");
+    createElement("br");
+    firstOption.html("");
+    secondOption.html("");
 }
 function windowResized() {
     canvas
