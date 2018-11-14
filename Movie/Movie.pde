@@ -12,6 +12,9 @@ void captureEvent(Capture c) {
   webcam.read();
 }
 
+void draw() {
+  image(webcam, 0, 0, 640, 480);
+}
 void keyPressed() {
   if(key == 't') {
     filter(THRESHOLD);
