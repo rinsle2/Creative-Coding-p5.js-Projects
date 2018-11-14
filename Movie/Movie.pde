@@ -4,7 +4,7 @@ Capture webcam;
 
 void setup() {
     size(640, 480);
-    webcam = new Capture(this, 640, 480, "Lenovo EasyCamera", 30);
+    webcam = new Capture(this, 640, 480, "Logitech c930e", 30);
     webcam.start();
 }
 
