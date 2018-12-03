@@ -11,11 +11,11 @@ float tXL;
 float tXR;
 float tYL;
 float tYR;
-int xAngle = 0;
-int yAngle = 0;
+float xAngle = 0;
+float yAngle = 0;
 
 void setup() {
-    size(640, 480);
+    size(640, 480, P3D);
     webcam = new Capture(this, 640, 480, 30);
     tXL = webcam.width*.1;
     tXR = webcam.width - tXL;
@@ -34,27 +34,25 @@ void captureEvent(Capture c) {
 
 int count;
 void draw() {
+  background(0);
   image(webcam, 0, 0, 640, 480);
   checkThresh();
   if(count > 0) {
     fill(color(#f00));
     ellipse(matchX, matchY, 20, 20);
-    while(matchX > tXR) {
-      xAngle = (xAngle +1)%360;
-    text(xAngle, width/2, height/2); 
+    if(matchX > tXR) {
+      xAngle = (xAngle*0.01+width/2)%width;
     }
-    while (matchX < tXL) {
-      xAngle = (xAngle-1)%360;
-    text(xAngle, width/2, height/2);
+    if (matchX < tXL) {
+      xAngle = (width/2-xAngle*0.01)%width;
     }
-    while (matchY < tYL) {
-      yAngle = (yAngle-1)%360;
-    text(yAngle, width/2, height/2+30);
+    if (matchY < tYL) {
+      yAngle = (height/2-yAngle*0.01)%height;
     }
-    while (matchY < tYR) {
-      yAngle = (yAngle+1)%360;
-    text(yAngle, width/2, height/2+30);
+    if (matchY < tYR) {
+      yAngle = ((yAngle*0.01)+height/2)%height;
     }
+    camera(xAngle, yAngle, (height/2)/tan(PI/6), width/2, height/2, 0, 1, 0);
   }
   if(mousePressed){
   strokeWeight(10);
@@ -62,6 +60,10 @@ void draw() {
     line(pmouseX, pmouseY, mouseX, mouseY);
     
   }
+  translate(width/2, height/2, -100);
+  noFill();
+  texture(webcam);
+  box(100);
 }
 void checkThresh() {
   for(int x = 0;x<webcam.width;x++)
