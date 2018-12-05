@@ -101,6 +101,15 @@ void keyPressed() {
   if(key == 'r' || key == 'R') {
     tint(255, 0, 0);
   }
+  if(key == 'g' || key == 'G') {
+  tint(0,255.0);
+  }
+  if(key== 'b' || key == 'B') {
+  tint(0,0,255);
+  }
+  if(key=='w'||key=='W') {
+  tint(0,0,0);
+  }
   
   if(key == 's'|| key == 'S') {
     saveFrame("saves/filtered" + counter + ".png");
