@@ -1,58 +1,50 @@
+/*
+Initially was P3D, P3D decided to be blegh, and now it rotates according to your motion :)
+*/
 import processing.video.*;
 
 Capture webcam;
-int counter;
-int fillColor;
-color trackColor = color(#000000);
-float thres = 15;
+int counter = 0;
+int fillColor = 0;
+color trackColor = color(#00ff00);
+float thres = 150;
 float matchX = 0;
 float matchY = 0;
-float tXL;
-float tXR;
-float tYL;
-float tYR;
-float xAngle = 0;
-float yAngle = 0;
+float tXL = 0;
+float tXR = 0;
+int angle = 0;
 
 void setup() {
-    size(640, 480, P3D);
+    size(640, 480);
     webcam = new Capture(this, 640, 480, 30);
     tXL = webcam.width*.1;
     tXR = webcam.width - tXL;
-    tYL = webcam.height*.1;
-    tYR = webcam.height - tYL;
     textSize(24);
     fillColor = #000000;
     counter = 1;
     webcam.start();
 }
 
-void captureEvent(Capture c) {
+void captureEvent() {
   webcam.read();
   loadPixels();
 }
 
-int count;
+int count = 0;
 void draw() {
+  count = 0;
   background(0);
   image(webcam, 0, 0, 640, 480);
   checkThresh();
   if(count > 0) {
-    fill(color(#f00));
+    fill(color(#ff0000));
     ellipse(matchX, matchY, 20, 20);
     if(matchX > tXR) {
-      xAngle = (xAngle*0.01+width/2)%width;
+      angle = (angle + 1)%360;
     }
-    if (matchX < tXL) {
-      xAngle = (width/2-xAngle*0.01)%width;
-    }
-    if (matchY < tYL) {
-      yAngle = (height/2-yAngle*0.01)%height;
-    }
-    if (matchY < tYR) {
-      yAngle = ((yAngle*0.01)+height/2)%height;
-    }
-    camera(xAngle, yAngle, (height/2)/tan(PI/6), width/2, height/2, 0, 1, 0);
+  if(matchX < tXR) {
+    angle = (angle - 1)%360;
+  }
   }
   if(mousePressed){
   strokeWeight(10);
@@ -60,10 +52,7 @@ void draw() {
     line(pmouseX, pmouseY, mouseX, mouseY);
     
   }
-  translate(width/2, height/2, -100);
-  noFill();
-  texture(webcam);
-  box(100);
+  rotate(angle);
 }
 void checkThresh() {
   for(int x = 0;x<webcam.width;x++)
